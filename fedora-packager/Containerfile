@@ -1,0 +1,7 @@
+FROM registry.fedoraproject.org/fedora-toolbox:37
+
+RUN dnf install -y zsh pacman bat neovim fedora-packager fedora-review krb5-workstation krb5-pkinit
+RUN curl -o /etc/pki/ca-trust/source/anchors/RH-IT-Root-CA.crt https://password.corp.redhat.com/RH-IT-Root-CA.crt
+RUN update-ca-trust
+RUN (cd /etc/yum.repos.d; sudo curl -O --location https://download.devel.redhat.com/rel-eng/RCMTOOLS/rcm-tools-fedora.repo)
+RUN dnf install -y rhpkg rhel-packager centpkg
