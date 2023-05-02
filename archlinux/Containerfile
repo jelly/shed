@@ -1,0 +1,8 @@
+FROM quay.io/toolbx-images/archlinux-toolbox:latest
+ARG REPO
+
+COPY setup_pacman_conf.sh /tmp/
+RUN /tmp/setup_pacman_conf.sh $REPO
+RUN pacman-key --init
+RUN pacman -Sy --noconfirm archlinux-keyring
+RUN pacman -Syu --needed --noconfirm zsh bat && pacman -Scc --noconfirm
