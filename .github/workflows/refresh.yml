@@ -1,0 +1,32 @@
+name: container-refresh
+on:
+  schedule:
+    # auto-refresh every Sunday evening
+    - cron: '0 22 * * 0'
+  # can be run manually on https://github.com/jelly/shed/actions
+  workflow_dispatch:
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    timeout-minutes: 60
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v3
+        with:
+          # need this to also fetch tags
+          fetch-depth: 0
+
+      - name: Build containers
+        timeout-minutes: 10
+        run: make -C archlinux all
+
+      - name: Log into container registry
+        run: podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
+
+      - name: Push containers to registry
+        run: |
+          podman push ghcr.io/jelly/archlinux-testing:latest
+          podman push ghcr.io/jelly/archlinux-staging:latest
