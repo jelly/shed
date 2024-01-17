@@ -3,11 +3,11 @@
 repo=$1
 
 enable_testing() {
-	sed -i 's#^\[core\]#\[testing\]\nInclude = /etc/pacman.d/mirrorlist\n\n\[community-testing\]\nInclude = /etc/pacman.d/mirrorlist\n\n\[core\]#' /etc/pacman.conf
+	sed -i 's#^\[core\]#\[core-testing\]\nInclude = /etc/pacman.d/mirrorlist\n\n\[extra-testing\]\nInclude = /etc/pacman.d/mirrorlist\n\n\[core\]#' /etc/pacman.conf
 }
 
 enable_staging() {
-	sed -i 's#^\[testing\]#\[staging\]\nInclude = /etc/pacman.d/mirrorlist\n\n\[community-staging\]\nInclude = /etc/pacman.d/mirrorlist\n\n\[testing\]#' /etc/pacman.conf
+	sed -i 's#^\[core-testing\]#\[core-staging\]\nInclude = /etc/pacman.d/mirrorlist\n\n\[extra-staging\]\nInclude = /etc/pacman.d/mirrorlist\n\n\[testing\]#' /etc/pacman.conf
 }
 
 if [ "$repo" = "testing" ]; then
