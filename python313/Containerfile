@@ -4,4 +4,4 @@ ARG REPO
 COPY pacman.conf /etc/pacman.conf
 RUN pacman-key --init
 RUN pacman -Sy --noconfirm archlinux-keyring
-RUN pacman -Syu --needed --noconfirm zsh bat && pacman -Scc --noconfirm
+RUN pacman -Syu --needed --noconfirm zsh bat python && pacman -Scc --noconfirm
