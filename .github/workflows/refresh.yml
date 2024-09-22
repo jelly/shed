@@ -19,16 +19,19 @@ jobs:
           # need this to also fetch tags
           fetch-depth: 0
 
-      - name: Build containers
+      - name: Build python313 container
         timeout-minutes: 10
-        run: |
-          make -C python313 all
-          make -C mkosi all
+        run: make -C python313 all
+
+      - name: Build mkosi container
+        timeout-minutes: 10
+        run: make -C mkosi all
 
       - name: Log into container registry
         run: podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
 
       - name: Push containers to registry
-        run: |
-          podman push ghcr.io/jelly/archlinux-python313:latest
-          podman push ghcr.io/jelly/archlinux-mkosi:latest
+        run: podman push ghcr.io/jelly/archlinux-python313:latest
+
+      - name: Push containers to registry
+        run: podman push ghcr.io/jelly/archlinux-mkosi:latest
