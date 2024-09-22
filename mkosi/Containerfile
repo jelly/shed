@@ -1,0 +1,8 @@
+FROM docker.io/archlinux
+
+RUN pacman-key --init
+RUN pacman -Sy --noconfirm archlinux-keyring
+RUN printf "[systemd]\nSigLevel = Never\nServer = https://pkgbuild.com/~jelle/systemd-reproducible/" >> /etc/pacman.conf
+RUN pacman -Syu --needed --noconfirm git dosfstools grub mtools python
+RUN pacman -Syu --needed --noconfirm systemd/systemd-libs systemd/systemd-ukify systemd/systemd
+RUN git clone https://github.com/systemd/mkosi.git && ln -s $PWD/mkosi/bin/mkosi /usr/bin/mkosi

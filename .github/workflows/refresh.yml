@@ -21,7 +21,9 @@ jobs:
 
       - name: Build containers
         timeout-minutes: 10
-        run: make -C python313 all
+        run: |
+          make -C python313 all
+          make -C mkosi all
 
       - name: Log into container registry
         run: podman login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} ghcr.io
@@ -29,3 +31,4 @@ jobs:
       - name: Push containers to registry
         run: |
           podman push ghcr.io/jelly/archlinux-python313:latest
+          podman push ghcr.io/jelly/archlinux-mkosi:latest
