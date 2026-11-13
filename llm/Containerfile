@@ -10,7 +10,10 @@ RUN useradd --uid 1000 --create-home coder
 
 RUN pacman-key --init
 RUN pacman -Sy --noconfirm archlinux-keyring
-RUN pacman -Syu --needed --noconfirm nodejs python mypy ruff meson meson-python python-pytest python-pytest-pacman python-pytest pkgconf strace github-cli git socat bubblewrap diffutils time npm make rust just gcc && pacman -Scc --noconfirm
+RUN pacman -Syu --needed --noconfirm nodejs python mypy ruff meson meson-python \
+                                     python-pytest python-pytest-pacman python-pytest \
+				     pkgconf strace github-cli git socat bubblewrap \
+				     uv diffutils time npm make rust just gcc && pacman -Scc --noconfirm
 RUN curl -o /usr/local/bin/claude "https://downloads.claude.ai/claude-code-releases/$VERSION/linux-x64/claude"
 RUN chmod +x /usr/local/bin/claude
 
